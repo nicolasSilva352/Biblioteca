@@ -1,8 +1,11 @@
 package com.example.Biblioteca.service;
 
 import com.example.Biblioteca.Entity.AutorEntity;
+import com.example.Biblioteca.Entity.EditoraEntity;
 import com.example.Biblioteca.dto.AutorRequestDTO;
 import com.example.Biblioteca.dto.AutorResponseDTO;
+import com.example.Biblioteca.dto.EditoraRequestDTO;
+import com.example.Biblioteca.dto.EditoraResponseDTO;
 import com.example.Biblioteca.repository.AutorRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -57,6 +60,46 @@ public class AutorService {
                 autor.getNome(),
                 autor.getIdade(),
                 autor.getBiografia()
+        );
+    }
+
+    //atualizar
+    public AutorResponseDTO atualizarPorID(Long id, AutorRequestDTO dto){
+        //buscar o autor existente
+        AutorEntity autor = autorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Autor não encontrado com id: " + id));
+
+        //atualiza os dados
+        autor.setNome(dto.nome());
+        autor.setIdade(dto.idade());
+        autor.setBiografia(dto.biografia());
+
+        //salva DTO
+        AutorEntity autorAtualizado = autorRepository.save(autor);
+
+        return new AutorResponseDTO(
+                autorAtualizado.getId(),
+                autorAtualizado.getNome(),
+                autorAtualizado.getIdade(),
+                autorAtualizado.getBiografia()
+        );
+    }
+
+    public AutorResponseDTO atualizarPorNome(String nome, AutorRequestDTO dto){
+
+        AutorResponseDTO autorDTO = buscarPorNome(nome).stream().findFirst()
+                .orElseThrow(() -> new RuntimeException("Autor não encontrado com nome: " + nome));
+
+        AutorEntity autor = autorRepository.findById(autorDTO.id())
+                .orElseThrow(() -> new RuntimeException("Erro ao carregar entidade do autor"));
+
+        AutorEntity autorAtualizado = autorRepository.save(autor);
+
+        return new AutorResponseDTO(
+                autorAtualizado.getId(),
+                autorAtualizado.getNome(),
+                autorAtualizado.getIdade(),
+                autorAtualizado.getBiografia()
         );
     }
 

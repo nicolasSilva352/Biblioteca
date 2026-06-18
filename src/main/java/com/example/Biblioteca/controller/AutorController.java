@@ -1,13 +1,11 @@
 package com.example.Biblioteca.controller;
 
-import com.example.Biblioteca.Entity.AutorEntity;
-import com.example.Biblioteca.Entity.EditoraEntity;
+
 import com.example.Biblioteca.dto.AutorRequestDTO;
 import com.example.Biblioteca.dto.AutorResponseDTO;
 import com.example.Biblioteca.dto.EditoraRequestDTO;
 import com.example.Biblioteca.dto.EditoraResponseDTO;
 import com.example.Biblioteca.service.AutorService;
-import com.example.Biblioteca.service.EditoraService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +27,18 @@ public class AutorController {
         return ResponseEntity.status(HttpStatus.CREATED).body(autorSalvo);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<AutorResponseDTO> atualizarAutor(@PathVariable Long id, @RequestBody AutorRequestDTO dto) {
+        AutorResponseDTO autorAtualizado = autorService.atualizarPorID(id, dto);
+        return ResponseEntity.ok(autorAtualizado);
+    }
+
+    @PutMapping("nome/{nome}")
+    public ResponseEntity<AutorResponseDTO> atualizarAutorPorNome(@PathVariable String nome, @RequestBody AutorRequestDTO dto) {
+        AutorResponseDTO autorAtualizado = autorService.atualizarPorNome(nome, dto);
+        return ResponseEntity.ok(autorAtualizado);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<AutorResponseDTO> obterAutorPorId(@PathVariable Long id){
         AutorResponseDTO autor = autorService.buscarPorId(id);
@@ -38,6 +48,12 @@ public class AutorController {
     @GetMapping("/nome/{nome}")
     public ResponseEntity<List<AutorResponseDTO>> obterAutorPorNome(@PathVariable String nome) {
         List<AutorResponseDTO> autores = autorService.buscarPorNome(nome);
+        return ResponseEntity.ok(autores);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<AutorResponseDTO>> listarTodosAutores() {
+        List<AutorResponseDTO> autores = autorService.listarTodos();
         return ResponseEntity.ok(autores);
     }
 

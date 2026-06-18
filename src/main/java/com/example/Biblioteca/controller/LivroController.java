@@ -1,10 +1,6 @@
 package com.example.Biblioteca.controller;
 
-import com.example.Biblioteca.Entity.EditoraEntity;
-import com.example.Biblioteca.Entity.LivroEntity;
-import com.example.Biblioteca.dto.EditoraResponseDTO;
-import com.example.Biblioteca.dto.LivroRequestDTO;
-import com.example.Biblioteca.dto.LivroResponseDTO;
+import com.example.Biblioteca.dto.*;
 import com.example.Biblioteca.service.LivroService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +14,19 @@ import java.util.List;
 public class LivroController {
 
     private final LivroService livroService;
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<LivroResponseDTO> atualizarLivro(@PathVariable Long id, @RequestBody LivroRequestDTO dto) {
+        LivroResponseDTO livroAtualizado = livroService.atualizarPorID(id, dto);
+        return ResponseEntity.ok(livroAtualizado);
+    }
+
+    @PutMapping("nome/{nome}")
+    public ResponseEntity<LivroResponseDTO> atualizarLivroPorNome(@PathVariable String nome, @RequestBody LivroRequestDTO dto) {
+        LivroResponseDTO livroAtualizado = livroService.atualizarPorNome(nome, dto);
+        return ResponseEntity.ok(livroAtualizado);
+    }
 
     @PostMapping
     public ResponseEntity<LivroResponseDTO> criarLivro(@RequestBody LivroRequestDTO dto) throws Throwable {
@@ -35,6 +44,12 @@ public class LivroController {
     @GetMapping("/nome/{nome}")
     public ResponseEntity<List<LivroResponseDTO>> obterLivroPorNome(@PathVariable String nome) {
         List<LivroResponseDTO> livros = livroService.buscarPorNome(nome);
+        return ResponseEntity.ok(livros);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<LivroResponseDTO>> listarTodosLivros() {
+        List<LivroResponseDTO> livros = livroService.listarTodos();
         return ResponseEntity.ok(livros);
     }
 

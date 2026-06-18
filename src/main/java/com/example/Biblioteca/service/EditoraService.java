@@ -3,9 +3,7 @@ package com.example.Biblioteca.service;
 import com.example.Biblioteca.Entity.AutorEntity;
 import com.example.Biblioteca.Entity.EditoraEntity;
 import com.example.Biblioteca.Entity.LivroEntity;
-import com.example.Biblioteca.dto.EditoraRequestDTO;
-import com.example.Biblioteca.dto.EditoraResponseDTO;
-import com.example.Biblioteca.dto.LivroResponseDTO;
+import com.example.Biblioteca.dto.*;
 import com.example.Biblioteca.repository.EditoraRepository;
 import com.example.Biblioteca.repository.LivroRepository;
 import jakarta.transaction.Transactional;
@@ -13,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static org.springframework.data.projection.EntityProjection.ProjectionType.DTO;
 
 @Service
 @RequiredArgsConstructor
@@ -58,6 +58,43 @@ public class EditoraService {
                 editora.getId(),
                 editora.getNome(),
                 editora.getCnpj()
+        );
+    }
+
+    //atualizar
+    public EditoraResponseDTO atualizarPorID(Long id, EditoraRequestDTO dto){
+        //buscar a editora existente
+        EditoraEntity editora = editoraRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Editora não encontrada com id: " + id));
+
+        //atualiza os dados
+        editora.setNome(dto.nome());
+        editora.setCnpj(dto.cnpj());
+
+        //salva DTO
+        EditoraEntity editoraAtualizada = editoraRepository.save(editora);
+
+        return new EditoraResponseDTO(
+                editoraAtualizada.getId(),
+                editoraAtualizada.getNome(),
+                editoraAtualizada.getCnpj()
+        );
+    }
+
+    public EditoraResponseDTO atualizarPorNome(String nome, EditoraRequestDTO dto){
+
+        EditoraResponseDTO editoraDTO = buscarPorNome(nome).stream().findFirst()
+                .orElseThrow(() -> new RuntimeException("Editora não encontrada com nome: " + nome));
+
+        EditoraEntity editora = editoraRepository.findById(editoraDTO.id())
+                .orElseThrow(() -> new RuntimeException("Erro ao carregar entidade da editora"));
+
+        EditoraEntity editoraAtualizada = editoraRepository.save(editora);
+
+        return new EditoraResponseDTO(
+                editoraAtualizada.getId(),
+                editoraAtualizada.getNome(),
+                editoraAtualizada.getCnpj()
         );
     }
 
