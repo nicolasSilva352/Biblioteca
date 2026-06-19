@@ -276,11 +276,11 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## 👨‍💻 Autor
 
-Desenvolvido com ❤️ por [Seu Nome]
+Desenvolvido com ❤️ por [Nicolas]
 
 ## 📞 Suporte
 
-Para suporte, abra uma issue no GitHub ou entre em contato através de [seu-email@exemplo.com]
+Para suporte, abra uma issue no GitHub ou entre em contato através de [nicelarsilva@gmail.com]
 
 ---
 
