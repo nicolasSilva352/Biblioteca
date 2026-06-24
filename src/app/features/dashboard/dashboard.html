@@ -1,0 +1,56 @@
+<div class="min-h-screen bg-gray-50 flex flex-col">
+  <nav class="bg-indigo-600 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <div class="flex items-center gap-2">
+          <span class="text-white text-2xl font-bold tracking-wider">📚 Biblioteca<span class="text-indigo-200">VIP</span></span>
+        </div>
+        <div class="flex items-center gap-4">
+          <span class="text-indigo-100 font-medium">Olá, {{ nomeUsuario }}</span>
+          <button (click)="sair()" class="bg-indigo-500 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors text-sm font-semibold shadow-sm">
+            Sair
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+    <div class="mb-8">
+      <h2 class="text-3xl font-bold text-gray-800">Painel de Controle</h2>
+      <p class="text-gray-500 mt-1">Resumo das atividades do sistema</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center hover:shadow-md transition-shadow">
+        <div class="rounded-full bg-blue-100 p-4 mr-4">
+          <span class="text-blue-600 text-2xl">📘</span>
+        </div>
+        <div>
+          <p class="text-sm font-medium text-gray-500">Total de Livros</p>
+          <p class="text-2xl font-bold text-gray-800">1.248</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center hover:shadow-md transition-shadow">
+        <div class="rounded-full bg-green-100 p-4 mr-4">
+          <span class="text-green-600 text-2xl">👥</span>
+        </div>
+        <div>
+          <p class="text-sm font-medium text-gray-500">Usuários Ativos</p>
+          <p class="text-2xl font-bold text-gray-800">342</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center hover:shadow-md transition-shadow">
+        <div class="rounded-full bg-red-100 p-4 mr-4">
+          <span class="text-red-600 text-2xl">⏰</span>
+        </div>
+        <div>
+          <p class="text-sm font-medium text-gray-500">Empréstimos Atrasados</p>
+          <p class="text-2xl font-bold text-red-600">12</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
